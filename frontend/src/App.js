@@ -6,19 +6,19 @@ import Navbar from "./components/navbar.component";
 import ExerciseList from "./components/exercises-list.component";
 import EditExercise from "./components/edit-exercise.component";
 import CreateExercise from "./components/create-exercise.component";
-import CreateUser from "./components/create-user.component";
-import RegisterUser from "./components/register-user.component"
+import RegisterUser from "./components/register-user.component";
+import LoginUser from "./components/login-user.component";
 function App() {
   return (
     <Router>
       <Navbar />
       <br />
       <div className="container">
-        <Route path="/" exact component={ExerciseList} />
+        <Route path="/" exact component={LoginUser} />
+        <Route path="/homepage" component={ExerciseList} />
         <Route path="/edit/:id" component={EditExercise} />
         <Route path="/create" component={CreateExercise} />
-        {/* <Route path="/user" component={CreateUser} /> */}
-        <Route path="/user" component={RegisterUser} />
+        <Route path="/user/register" component={RegisterUser} />
       </div>
     </Router>
   );

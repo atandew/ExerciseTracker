@@ -11,7 +11,15 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   User.findById(req.params.id)
     .then((user) => res.json(user))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => { res.status(400).json("Error: " + err); console.log("Error while adding user =>" + err); });
+});
+
+router.get("/:email/:password", async (req, res) => {
+  const user = await User.find({ username: req.params.email, password: req.params.password })
+    .catch(err => res.status(400).json("User not found"));
+
+  if (user.length > 0) res.status(200).send(user);
+  else res.status(404).json("Invalid email or password");
 });
 
 
@@ -45,7 +53,7 @@ router.post("/add", [
   newUser
     .save()
     .then(() => res.status(200).json("User added with username : " + username))
-    .catch((err) => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Error:> " + err));
 });
 
 router.delete("/delete/:id", async (req, res) => {

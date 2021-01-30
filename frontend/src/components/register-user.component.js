@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
-export default class CreateExercises extends Component {
+export default class CreateUser extends Component {
     constructor(props) {
         super(props);
 
@@ -19,25 +19,26 @@ export default class CreateExercises extends Component {
         //whenever we update the state it will automatically the page
         this.state = {
             username: "",
-            role: "",
+            role: "user",
             firstname: "",
             lastname: "",
             mobileno: "",
             password: ""
 
         };
+
     }
 
-    componentDidMount() {
-        axios.get("http://localhost:5000/user/").then((res) => {
-            if (res.data.length > 0) {
-                this.setState({
-                    users: res.data.map((user) => user.username),
-                    username: res.data[0].username,
-                });
-            }
-        });
-    }
+    // componentDidMount() {
+    //     axios.get("http://localhost:5000/user/").then((res) => {
+    //         if (res.data.length > 0) {
+    //             this.setState({
+    //                 users: res.data.map((user) => user.username),
+    //                 username: res.data[0].username,
+    //             });
+    //         }
+    //     });
+    // }
 
     onChangeUsername(e) {
         this.setState({
@@ -73,7 +74,7 @@ export default class CreateExercises extends Component {
     onSubmit(e) {
         e.preventDefault();
         const newuser = {
-            username: this.state.username,
+            username: this.state.username.toLowerCase(),
             role: this.state.role,
             firstname: this.state.firstname,
             lastname: this.state.lastname,
@@ -82,30 +83,29 @@ export default class CreateExercises extends Component {
         };
 
         axios
-            .post("http://localhost:5000/user/add/", newuser)
+            .post("http://localhost:5000/user/add", newuser)
             .then((res) => {
                 console.log(res.data);
                 alert("User added succesfully for username = " + newuser.username);
                 window.location = "/";
             })
-            .catch((err) => alert("Error=" + err));
+            .catch((err) => alert("Error=>" + err));
 
         console.log(newuser);
     }
 
     render() {
         return (
-            <div>
+            <div className="container w-50">
                 <h3>Register new User</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <label>Email:</label>
                         <input
-                            type="text"
+                            type="email"
                             ref="userInput"
                             required
                             className="form-control"
-                            value={this.state.username}
                             onChange={this.onChangeUsername}
                         />
                         <div className="form-group">
@@ -129,7 +129,7 @@ export default class CreateExercises extends Component {
                             />
                         </div>
                         <div className="form-group">
-                            <label>mobileno: </label>
+                            <label>Mobile No: </label>
                             <input
                                 type="tel"
                                 pattern="[0-9]{10}"
@@ -149,11 +149,31 @@ export default class CreateExercises extends Component {
                                 onChange={this.onChangePassword}
                             />
                         </div>
+                        <div className="form-group">
+                            <label>Role: </label>
+                            <select
+                                ref="userInput"
+                                required
+                                className="form-control"
+                                onChange={this.onChangeRole}
+                            >
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+
+                                {/* {this.state.users.map(function (user) {
+                                    return (
+                                        <option key={user} value={user}>
+                                            {user}
+                                        </option>
+                                    );
+                                })} */}
+                            </select>
+                        </div>
                     </div>
                     <div className="form-group">
                         <input
                             type="submit"
-                            value="Create Exercise Log"
+                            value="Register"
                             className="btn btn-primary"
                         />
                     </div>

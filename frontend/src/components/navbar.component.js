@@ -11,7 +11,7 @@ export default class Navbar extends Component {
         <div className="navbar-collapse">
           <ul className="navbar-nav mr-auto">
             <li className="navbar-item">
-              <Link to="/" className="nav-link">
+              <Link to="/homepage" className="nav-link">
                 Exercises
               </Link>
             </li>
@@ -21,8 +21,13 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li className="navbar-item">
-              <Link to="/user" className="nav-link">
+              <Link to="/user/register" className="nav-link">
                 Create User
+              </Link>
+            </li>
+            <li className="navbar-item">
+              <Link to="/" className="nav-link">
+                Login User
               </Link>
             </li>
           </ul>
